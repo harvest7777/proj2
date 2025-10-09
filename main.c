@@ -104,7 +104,6 @@ void return_forks(int philosopher_number)
     // Lock the mutex to enter critical section
     pthread_mutex_lock(&mutex);
 
-    // Set state back to thinking
     state[philosopher_number] = think;
     printf("Philosopher %d: Returning forks and thinking\n", philosopher_number);
     fflush(stdout);
@@ -114,5 +113,5 @@ void return_forks(int philosopher_number)
     test(right_neighbor(philosopher_number));
 
     // Unlock the mutex
-    pthread_mutex_unlock(&mutex);
+    pthread_mutex_unlock(&mutex); // stack overflow search
 }
