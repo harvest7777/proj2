@@ -24,7 +24,7 @@
 
 // Global synchronization variables
 pthread_mutex_t mutex;
-pthread_cond_t cond[N];
+pthread_cond_t cond[N]; // For getting notified on fork availability
 int state[N];      // Current state of each philosopher
 int fork_owner[N]; // Track philosopher owns fork 
 
@@ -86,6 +86,8 @@ void test(int i)
         fork_owner[right_fork(i)] = i;
 
         printf("    Forks are with Philosopher #%d\n", i);
+        // Wakes up the thread that is waiting on this condition is on (the current philospher)
+        // this will let the philospher eat
         pthread_cond_signal(&cond[i]); // stack overflow search
     }
 }
@@ -101,6 +103,7 @@ void pickup_forks(int philosopher_number)
 
     while (state[philosopher_number] != eat)
     {
+        // let the other philosphers mutate the cond at this philospher
         pthread_cond_wait(&cond[philosopher_number], &mutex);
     }
 
@@ -192,6 +195,7 @@ int main()
     for (int i = 0; i < N; i++)
     {
         pthread_create(&threads[i], NULL, philosopher, &ids[i]);// https://www.geeksforgeeks.org/c/thread-functions-in-c-c/
+
     }
 
     sleep(40); // I used 40 seconds to allow philosophers to eat and think 
