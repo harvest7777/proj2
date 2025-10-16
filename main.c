@@ -66,7 +66,7 @@ void print_forks()
     {
         if (fork_owner[i] != -1)
         {
-            printf(" Fork #%dis with %d\n", i, fork_owner[i]);
+            printf(" Fork #%d is with %d\n", i, fork_owner[i]);
         }
     }
 }
@@ -188,7 +188,7 @@ int main()
     // Display fork status
     for (int i = 0; i < N; i++)
     {
-        printf("     Fork #%dis with %d\n", i, (i + N - 1) % N);
+        printf("     Fork #%d is with %d\n", i, (i + N - 1) % N);
     }
 
     // Create philosopher threads
