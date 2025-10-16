@@ -198,12 +198,10 @@ int main()
 
     }
 
-    sleep(40); // I used 40 seconds to allow philosophers to eat and think 
-
-    // Cancel threads
+    // According to Teaching Assistant's instructions, we will run it infinitely
     for (int i = 0; i < N; i++)
     {
-        pthread_cancel(threads[i]); 
+        pthread_join(threads[i], NULL);
     }
 
     // pthread_mutex_destroy to free up resources 
